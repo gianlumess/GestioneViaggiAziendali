@@ -58,4 +58,10 @@ public class ViaggioService {
 
             return this.viaggiRepository.save(found);
     }
+
+    //FIND BY ID AND DELETE
+    public void findByIdAndDelete(UUID viaggioId){
+        Viaggio found=this.findById(viaggioId);
+        this.viaggiRepository.delete(found);
+    }
 }

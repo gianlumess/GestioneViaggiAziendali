@@ -1,7 +1,9 @@
 package gianlucamessina.GestioneViaggiAziendali.controllers;
 
+import gianlucamessina.GestioneViaggiAziendali.entities.Dipendente;
 import gianlucamessina.GestioneViaggiAziendali.entities.Viaggio;
 import gianlucamessina.GestioneViaggiAziendali.exceptions.BadRequestException;
+import gianlucamessina.GestioneViaggiAziendali.payloads.NewDipendenteDTO;
 import gianlucamessina.GestioneViaggiAziendali.payloads.NewViaggioDTO;
 import gianlucamessina.GestioneViaggiAziendali.services.ViaggioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +48,18 @@ public class ViaggiController {
     @GetMapping("/{viaggioId}")
     public Viaggio findById(@PathVariable UUID viaggioId){
         return this.viaggioService.findById(viaggioId);
+    }
+
+    //PUT
+    @PutMapping("/{viaggioId}")
+    public Viaggio findByIdAndUpdate(@PathVariable UUID viaggioId, @RequestBody @Validated NewViaggioDTO body){
+        return this.viaggioService.findByIdAndUpdate(viaggioId,body);
+    }
+
+    //DELETE
+    @DeleteMapping("/{viaggioId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void findByIdAndDelete(@PathVariable UUID viaggioId){
+        this.viaggioService.findByIdAndDelete(viaggioId);
     }
 }
