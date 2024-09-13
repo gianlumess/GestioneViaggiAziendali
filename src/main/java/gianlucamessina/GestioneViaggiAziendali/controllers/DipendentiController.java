@@ -32,7 +32,7 @@ public class DipendentiController {
     //POST (http://localhost:3001/dipendenti)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public NewDipendenteRespDTO save(@RequestBody @Validated NewDipendenteDTO body, BindingResult validation){
+    public Dipendente save(@RequestBody @Validated NewDipendenteDTO body, BindingResult validation){
         // @Validated serve per 'attivare' le regole di validazione descritte nel DTO
         // BindingResult permette di capire se ci sono stati errori e quali
 
@@ -42,6 +42,6 @@ public class DipendentiController {
             throw new BadRequestException("ci sono stati errori nel payload: "+messages);
         }
 
-        return new NewDipendenteRespDTO(this.dipendenteService.save(body).getId());
+        return this.dipendenteService.save(body);
     }
 }
