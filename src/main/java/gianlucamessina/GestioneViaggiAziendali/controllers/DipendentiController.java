@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -43,5 +44,17 @@ public class DipendentiController {
         }
 
         return this.dipendenteService.save(body);
+    }
+
+    //GET FIND BY ID (http://localhost:3001/dipendenti/{dipendenteId})
+    @GetMapping("/{dipendenteId}")
+    public Dipendente findById(@PathVariable UUID dipendenteId){
+            return this.dipendenteService.findById(dipendenteId);
+    }
+
+    //PUT
+    @PutMapping("/{dipendenteId}")
+    public Dipendente findByIdAndUpdate(@PathVariable UUID dipendenteId, @RequestBody @Validated NewDipendenteDTO body){
+        return this.dipendenteService.findByIdAndUpdate(dipendenteId,body);
     }
 }
