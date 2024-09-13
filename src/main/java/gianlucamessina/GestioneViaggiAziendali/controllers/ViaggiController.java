@@ -62,4 +62,10 @@ public class ViaggiController {
     public void findByIdAndDelete(@PathVariable UUID viaggioId){
         this.viaggioService.findByIdAndDelete(viaggioId);
     }
+
+    //MODIFICA STATO VIAGGIO
+    @PatchMapping("/{viaggioId}")
+    public Viaggio editStatus(@PathVariable UUID viaggioId,@RequestBody NewViaggioDTO body){
+        return this.viaggioService.editStatus(viaggioId,body);
+    }
 }

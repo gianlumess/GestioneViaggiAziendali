@@ -64,4 +64,12 @@ public class ViaggioService {
         Viaggio found=this.findById(viaggioId);
         this.viaggiRepository.delete(found);
     }
+
+    //MODIFICA STATO VIAGGIO
+    public Viaggio editStatus(UUID viaggioId,NewViaggioDTO body){
+        Viaggio found=this.findById(viaggioId);
+
+        found.setStatoViaggio(body.statoViaggio());
+        return this.viaggiRepository.save(found);
+    }
 }
