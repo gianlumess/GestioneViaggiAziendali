@@ -70,4 +70,9 @@ public class DipendenteService {
 
         return this.dipendentiRepository.save(newDipendente);
     }
+
+    public void findByIdAndDelete(UUID dipendenteId){
+        Dipendente found=this.findById(dipendenteId);
+        this.dipendentiRepository.delete(found);
+    }
 }

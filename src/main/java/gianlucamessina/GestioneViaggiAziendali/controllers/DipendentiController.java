@@ -57,4 +57,11 @@ public class DipendentiController {
     public Dipendente findByIdAndUpdate(@PathVariable UUID dipendenteId, @RequestBody @Validated NewDipendenteDTO body){
         return this.dipendenteService.findByIdAndUpdate(dipendenteId,body);
     }
+
+    //DELETE
+    @DeleteMapping("/{dipendenteId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void findByIdAndDelete(@PathVariable UUID dipendenteId){
+        this.dipendenteService.findByIdAndDelete(dipendenteId);
+    }
 }
