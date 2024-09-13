@@ -5,6 +5,7 @@ import gianlucamessina.GestioneViaggiAziendali.entities.Viaggio;
 import gianlucamessina.GestioneViaggiAziendali.exceptions.BadRequestException;
 import gianlucamessina.GestioneViaggiAziendali.payloads.NewDipendenteDTO;
 import gianlucamessina.GestioneViaggiAziendali.payloads.NewViaggioDTO;
+import gianlucamessina.GestioneViaggiAziendali.payloads.NewViaggioStatoDTO;
 import gianlucamessina.GestioneViaggiAziendali.services.ViaggioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -65,7 +66,7 @@ public class ViaggiController {
 
     //MODIFICA STATO VIAGGIO
     @PatchMapping("/{viaggioId}")
-    public Viaggio editStatus(@PathVariable UUID viaggioId,@RequestBody NewViaggioDTO body){
+    public Viaggio editStatus(@PathVariable UUID viaggioId,@RequestBody @Validated NewViaggioStatoDTO body){
         return this.viaggioService.editStatus(viaggioId,body);
     }
 }

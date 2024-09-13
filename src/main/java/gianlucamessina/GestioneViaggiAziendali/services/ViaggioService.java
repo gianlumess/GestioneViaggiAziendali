@@ -5,6 +5,7 @@ import gianlucamessina.GestioneViaggiAziendali.enums.StatoViaggio;
 import gianlucamessina.GestioneViaggiAziendali.exceptions.BadRequestException;
 import gianlucamessina.GestioneViaggiAziendali.exceptions.NotFoundException;
 import gianlucamessina.GestioneViaggiAziendali.payloads.NewViaggioDTO;
+import gianlucamessina.GestioneViaggiAziendali.payloads.NewViaggioStatoDTO;
 import gianlucamessina.GestioneViaggiAziendali.repositories.ViaggiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -66,7 +67,7 @@ public class ViaggioService {
     }
 
     //MODIFICA STATO VIAGGIO
-    public Viaggio editStatus(UUID viaggioId,NewViaggioDTO body){
+    public Viaggio editStatus(UUID viaggioId, NewViaggioStatoDTO body){
         Viaggio found=this.findById(viaggioId);
 
         found.setStatoViaggio(body.statoViaggio());
