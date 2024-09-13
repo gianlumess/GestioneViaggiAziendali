@@ -1,5 +1,7 @@
 package gianlucamessina.GestioneViaggiAziendali.services;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import gianlucamessina.GestioneViaggiAziendali.entities.Dipendente;
 import gianlucamessina.GestioneViaggiAziendali.exceptions.BadRequestException;
 import gianlucamessina.GestioneViaggiAziendali.exceptions.NotFoundException;
@@ -11,13 +13,17 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.UUID;
 
 @Service
 public class DipendenteService {
     @Autowired
     private DipendentiRepository dipendentiRepository;
+    @Autowired
+    Cloudinary cloudinary;
 
     //FIND ALL CON PAGINAZIONE
     public Page<Dipendente> findAll(int page,int size,String sortBy){
@@ -74,5 +80,16 @@ public class DipendenteService {
     public void findByIdAndDelete(UUID dipendenteId){
         Dipendente found=this.findById(dipendenteId);
         this.dipendentiRepository.delete(found);
+    }
+
+    public Dipendente uploadProfilePicture(UUID dipendenteId,MultipartFile pic) throws IOException {
+        Dipendente found=this.findById(dipendenteId);
+
+        String url= (String) cloudinary.uploader().upload(pic.getBytes(), ObjectUtils.emptyMap()).get("url");
+        System.out.println("URL: "+url);
+
+        found.setFotoProfilo(url);
+
+        return this.dipendentiRepository.save(found);
     }
 }

@@ -3,7 +3,6 @@ package gianlucamessina.GestioneViaggiAziendali.controllers;
 import gianlucamessina.GestioneViaggiAziendali.entities.Dipendente;
 import gianlucamessina.GestioneViaggiAziendali.exceptions.BadRequestException;
 import gianlucamessina.GestioneViaggiAziendali.payloads.NewDipendenteDTO;
-import gianlucamessina.GestioneViaggiAziendali.payloads.NewDipendenteRespDTO;
 import gianlucamessina.GestioneViaggiAziendali.services.DipendenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -63,5 +64,11 @@ public class DipendentiController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void findByIdAndDelete(@PathVariable UUID dipendenteId){
         this.dipendenteService.findByIdAndDelete(dipendenteId);
+    }
+
+    //UPLOAD PROFILE PICTURE DEL DIPENDENTE
+    @PatchMapping("/{dipendenteId}/pic")
+    public Dipendente uploadProfilePic(@PathVariable UUID dipendenteId, @RequestParam("pic")MultipartFile pic) throws IOException {
+        return this.dipendenteService.uploadProfilePicture(dipendenteId,pic);
     }
 }
