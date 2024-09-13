@@ -24,9 +24,9 @@ public class Viaggio {
     @Enumerated(EnumType.STRING)
     private StatoViaggio statoViaggio;
 
-    public Viaggio(String destinazione, LocalDate data) {
+    public Viaggio(String destinazione, LocalDate data, StatoViaggio statoViaggio) {
         this.destinazione = destinazione;
         this.data = data;
-        this.statoViaggio=StatoViaggio.IN_PROGRAMMA;
+        this.statoViaggio = statoViaggio;
     }
 }
