@@ -1,6 +1,7 @@
 package gianlucamessina.GestioneViaggiAziendali.services;
 
 import gianlucamessina.GestioneViaggiAziendali.entities.Dipendente;
+import gianlucamessina.GestioneViaggiAziendali.exceptions.BadRequestException;
 import gianlucamessina.GestioneViaggiAziendali.payloads.NewDipendenteDTO;
 import gianlucamessina.GestioneViaggiAziendali.repositories.DipendentiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,18 @@ public class DipendenteService {
     }
 
     //SAVE DI UN NUOVO DIPENDENTE
-    /*public Dipendente save(NewDipendenteDTO body){
+    public Dipendente save(NewDipendenteDTO body){
         this.dipendentiRepository.findByEmail(body.email()).ifPresent(dipendente -> {
-
+            throw new BadRequestException("L'email: "+body.email()+" è già in uso!");
         });
-    }*/
+
+        this.dipendentiRepository.findByUsername(body.username()).ifPresent(dipendente -> {
+            throw new BadRequestException("L'username: "+body.username()+" è già in uso!");
+        });
+
+        Dipendente dipendente=new Dipendente(body.username(), body.cognome(), body.nome(), body.email(),
+                "https://ui-avatars.com/api/?name="+body.nome()+"+"+body.cognome() );
+
+        return this.dipendentiRepository.save(dipendente);
+    }
 }

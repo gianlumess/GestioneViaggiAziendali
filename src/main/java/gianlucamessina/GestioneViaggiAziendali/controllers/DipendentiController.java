@@ -1,13 +1,18 @@
 package gianlucamessina.GestioneViaggiAziendali.controllers;
 
 import gianlucamessina.GestioneViaggiAziendali.entities.Dipendente;
+import gianlucamessina.GestioneViaggiAziendali.exceptions.BadRequestException;
+import gianlucamessina.GestioneViaggiAziendali.payloads.NewDipendenteDTO;
+import gianlucamessina.GestioneViaggiAziendali.payloads.NewDipendenteRespDTO;
 import gianlucamessina.GestioneViaggiAziendali.services.DipendenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/dipendenti")
@@ -25,5 +30,18 @@ public class DipendentiController {
     }
 
     //POST (http://localhost:3001/dipendenti)
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public NewDipendenteRespDTO save(@RequestBody @Validated NewDipendenteDTO body, BindingResult validation){
+        // @Validated serve per 'attivare' le regole di validazione descritte nel DTO
+        // BindingResult permette di capire se ci sono stati errori e quali
 
+        if(validation.hasErrors()){
+            String messages=validation.getAllErrors().stream().map(objectError -> objectError.getDefaultMessage()).collect(Collectors.joining(". "));
+
+            throw new BadRequestException("ci sono stati errori nel payload: "+messages);
+        }
+
+        return new NewDipendenteRespDTO(this.dipendenteService.save(body).getId());
+    }
 }
