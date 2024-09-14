@@ -6,6 +6,7 @@ import gianlucamessina.GestioneViaggiAziendali.entities.Viaggio;
 import gianlucamessina.GestioneViaggiAziendali.exceptions.BadRequestException;
 import gianlucamessina.GestioneViaggiAziendali.exceptions.NotFoundException;
 import gianlucamessina.GestioneViaggiAziendali.payloads.NewPrenotazioneDTO;
+import gianlucamessina.GestioneViaggiAziendali.payloads.PrenotazioneRespDTO;
 import gianlucamessina.GestioneViaggiAziendali.repositories.PrenotazioniRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,7 +38,7 @@ public class PrenotazioneService {
     }
 
     //SAVE DI UNA PRENOTAZIONE
-    public Prenotazione save(NewPrenotazioneDTO body){
+    public PrenotazioneRespDTO save(NewPrenotazioneDTO body){
         //controllo che dipendente e viaggio inseriti esistano
         Dipendente foundDipendente=this.dipendenteService.findById(UUID.fromString(body.dipendenteId()));
         Viaggio foundViaggio=this.viaggioService.findById(UUID.fromString(body.viaggioId()));
@@ -48,7 +49,9 @@ public class PrenotazioneService {
         }
 
         Prenotazione prenotazione= new Prenotazione(LocalDate.now(),body.volo(),body.alloggio(),foundDipendente,foundViaggio);
-        return this.prenotazioniRepository.save(prenotazione);
+        this.prenotazioniRepository.save(prenotazione);
+        PrenotazioneRespDTO resp=new PrenotazioneRespDTO(prenotazione.getId(), prenotazione.getDataRichiesta(), body.volo(), body.alloggio(), body.dipendenteId(), body.viaggioId());
+        return resp;
     }
 
     //FIND BY ID

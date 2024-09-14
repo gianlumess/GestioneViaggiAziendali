@@ -5,6 +5,7 @@ import gianlucamessina.GestioneViaggiAziendali.entities.Viaggio;
 import gianlucamessina.GestioneViaggiAziendali.exceptions.BadRequestException;
 import gianlucamessina.GestioneViaggiAziendali.payloads.NewPrenotazioneDTO;
 import gianlucamessina.GestioneViaggiAziendali.payloads.NewViaggioDTO;
+import gianlucamessina.GestioneViaggiAziendali.payloads.PrenotazioneRespDTO;
 import gianlucamessina.GestioneViaggiAziendali.services.PrenotazioneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,7 +35,7 @@ public class PrenotazioniController {
     //POST (http://localhost:3001/prenotazioni)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Prenotazione save(@RequestBody @Validated NewPrenotazioneDTO body, BindingResult validation){
+    public PrenotazioneRespDTO save(@RequestBody @Validated NewPrenotazioneDTO body, BindingResult validation){
         if(validation.hasErrors()){
             String messages=validation.getAllErrors().stream().map(objectError -> objectError.getDefaultMessage()).collect(Collectors.joining(". "));
 
