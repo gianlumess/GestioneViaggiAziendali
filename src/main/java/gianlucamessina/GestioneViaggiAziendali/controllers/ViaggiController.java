@@ -1,9 +1,7 @@
 package gianlucamessina.GestioneViaggiAziendali.controllers;
 
-import gianlucamessina.GestioneViaggiAziendali.entities.Dipendente;
 import gianlucamessina.GestioneViaggiAziendali.entities.Viaggio;
 import gianlucamessina.GestioneViaggiAziendali.exceptions.BadRequestException;
-import gianlucamessina.GestioneViaggiAziendali.payloads.NewDipendenteDTO;
 import gianlucamessina.GestioneViaggiAziendali.payloads.NewViaggioDTO;
 import gianlucamessina.GestioneViaggiAziendali.payloads.NewViaggioStatoDTO;
 import gianlucamessina.GestioneViaggiAziendali.services.ViaggioService;
